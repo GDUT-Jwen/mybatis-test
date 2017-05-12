@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 配置数据库信息 -->
+<properties resource="config/config.properties"> </properties> 
+
+<settings>
+	<setting name="cacheEnabled" value="true"/>
+	<setting name="lazyLoadingEnabled" value="true"/>
+	<setting name="multipleResultSetsEnabled" value="true"/>
+	<setting name="useColumnLabel" value="true"/>
+	<setting name="useGeneratedKeys" value="false"/>
+<!-- 	<setting name="enhancementEnabled" value="false"/>
+ -->	<setting name="defaultExecutorType" value="SIMPLE"/>
+	<setting name="defaultStatementTimeout" value="25000"/>
+</settings>
+
+	<typeAliases>
+		<typeAlias alias="MYBATISUSER" type="com.yiibai.mybatis.models.MYBATISUSER" />
+		<typeAlias alias="NwppUser" type="com.yiibai.mybatis.models.NwppUser" />
+	</typeAliases>
+	<environments default="development">
+	    <environment id="development">
+		<transactionManager type="JDBC" />
+			<dataSource type="POOLED">  
+                <property name="driver" value="${driver}" />
+			    <property name="url" value="${url}" />
+			    <property name="username" value="${username}" />
+			    <property name="password" value="${password}" />
+                       </dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+	     <!-- // power by http://www.yiibai.com -->
+	     <mapper resource="com/yiibai/mybatis/modelsXml/MYBATISUSER.xml" />
+	      <mapper resource="com/yiibai/mybatis/modelsXml/NwppUser.xml" />
+	</mappers>
+</configuration>
