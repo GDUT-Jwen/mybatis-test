@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yiibai.mybatis.models.UserMapper">
+	<resultMap type="com.yiibai.mybatis.models.Customer" id="resultCustomerMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="age" column="age" />
+		<association property="product" javaType="com.yiibai.mybatis.models.Product">
+			<id property="id" column="customer_id"/>
+			<result property="name" column="name"/>
+			<result property="price" column="price"/>
+		</association>
+	</resultMap>
+
+	<select id="getCustomer" resultMap="resultCustomerMap" parameterType="int">
+		SELECT u.*,p.*
+		FROM product p, customer u
+		WHERE u.id = p.customer_id AND p.customer_id = #{user_id}
+  </select>
+</mapper>
