@@ -3,7 +3,22 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yiibai.mybatis.models.UserMapper">
-	<select id="GetUserByID" parameterType="int" resultType="MYBATISUSER">
-		select * from MYBATISUSER where id = #{id}
-    </select>
+	<!-- User 级联文章查询 方法配置 (一个用户对多个文章)  -->
+
+	<resultMap type="MybatisUser" id="resultUserMap">
+		<result property="id" column="user_id" />
+		<result property="username" column="username" />
+		<result property="mobile" column="mobile" />
+		<collection property="posts" ofType="com.yiibai.mybatis.models.Post" column="userid">
+			<id property="id" column="post_id" javaType="int" jdbcType="INTEGER"/>
+			<result property="title" column="title" javaType="string" jdbcType="VARCHAR"/>
+			<result property="content" column="content" javaType="string" jdbcType="VARCHAR"/>
+		</collection>
+	</resultMap>
+
+	<select id="getUser" resultMap="resultUserMap" parameterType="int">
+		SELECT u.*,p.*
+		FROM mybatisuser u, post p
+		WHERE u.id=p.userid AND id=#{user_id}
+  </select>
 </mapper>
